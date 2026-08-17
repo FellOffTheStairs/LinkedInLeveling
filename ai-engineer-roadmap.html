@@ -1,0 +1,1698 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Engineer Visibility Roadmap</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0f172a;
+    }
+  </style>
+</head>
+<body>
+<div id="roadmap-app">
+  <style>
+    #roadmap-app {
+      --bg: #0f172a;
+      --panel: #172033;
+      --panel-2: #111827;
+      --text: #eef4ff;
+      --muted: #aab7cf;
+      --line: rgba(255,255,255,.12);
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --accent-3: #f59e0b;
+      --danger: #fb7185;
+      --shadow: 0 18px 50px rgba(0,0,0,.28);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 5%, rgba(56,189,248,.18), transparent 32%),
+        radial-gradient(circle at 84% 10%, rgba(34,197,94,.12), transparent 26%),
+        linear-gradient(180deg, #0f172a 0%, #111827 100%);
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    #roadmap-app * { box-sizing: border-box; }
+
+    .app-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 0 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(56,189,248,.95), rgba(34,197,94,.9));
+      color: #06111f;
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      line-height: 1.1;
+    }
+
+    .brand p, .hero p, .small, .quest-meta, .role-card p, .project-card p {
+      color: var(--muted);
+    }
+
+    .brand p {
+      margin: 3px 0 0;
+      font-size: .92rem;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button, .tab {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 13px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover, .tab:hover { background: rgba(255,255,255,.1); }
+
+    .primary {
+      background: var(--accent);
+      color: #06111f;
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+
+    .hero-main, .panel, .role-card, .project-card, .quest-card {
+      background: rgba(23,32,51,.86);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+    }
+
+    .hero-main {
+      padding: clamp(22px, 4vw, 40px);
+      min-height: 310px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: .95;
+      max-width: 760px;
+    }
+
+    .hero p {
+      margin: 18px 0 0;
+      max-width: 680px;
+      font-size: clamp(1rem, 1.4vw, 1.12rem);
+      line-height: 1.65;
+    }
+
+    .status-panel {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .level-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .level {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .xp {
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .bar {
+      height: 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.06);
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .25s ease;
+    }
+
+    .avatar {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .avatar-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(56,189,248,.16);
+      border: 1px solid rgba(56,189,248,.35);
+      font-size: 1.8rem;
+    }
+
+    .avatar strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 24px 0 16px;
+    }
+
+    .tab.active {
+      background: var(--text);
+      color: #0f172a;
+      border-color: transparent;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .panel {
+      grid-column: span 12;
+      padding: 20px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      margin: 4px 0 0;
+      line-height: 1.45;
+    }
+
+    .quest-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .world-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .stage {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+      min-height: 84px;
+    }
+
+    .stage.active {
+      border-color: rgba(56,189,248,.55);
+      background: rgba(56,189,248,.1);
+    }
+
+    .stage.clear {
+      border-color: rgba(34,197,94,.5);
+      background: rgba(34,197,94,.1);
+    }
+
+    .stage strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .quest-card {
+      padding: 16px;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quest-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      width: 100%;
+      align-items: start;
+    }
+
+    .quest-token {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.07);
+      border: 1px solid var(--line);
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .quest-card h4 {
+      margin: 0 0 7px;
+      font-size: 1rem;
+    }
+
+    .quest-card.done {
+      background: rgba(34,197,94,.09);
+      border-color: rgba(34,197,94,.35);
+    }
+
+    .quest-card.done .quest-token {
+      background: var(--accent-2);
+      color: #052014;
+      border-color: transparent;
+    }
+
+    .quest-action {
+      width: 100%;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quest-action button {
+      min-width: 120px;
+    }
+
+    .achievements {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .achievement {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+
+    .achievement.unlocked {
+      background: rgba(245,158,11,.12);
+      border-color: rgba(245,158,11,.42);
+      color: var(--text);
+    }
+
+    .boss {
+      margin-top: 16px;
+      border: 1px solid rgba(251,113,133,.36);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(251,113,133,.08);
+    }
+
+    .boss.ready {
+      border-color: rgba(34,197,94,.48);
+      background: rgba(34,197,94,.09);
+    }
+
+    .quest-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      color: var(--muted);
+      background: rgba(255,255,255,.04);
+      font-size: .78rem;
+    }
+
+    .role-grid, .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .armory-layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .character-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      padding: 16px;
+      position: sticky;
+      top: 14px;
+    }
+
+    .character-frame {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 1px solid rgba(56,189,248,.38);
+      background:
+        radial-gradient(circle at 50% 28%, rgba(56,189,248,.24), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+    }
+
+    .character-sigil {
+      width: 92px;
+      height: 92px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(56,189,248,.92), rgba(34,197,94,.82));
+      color: #06111f;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .stat-lines {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .stat-line {
+      display: grid;
+      grid-template-columns: 78px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .mini-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .mini-bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .equipment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .equipment-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .equipment-card.unlocked {
+      border-color: rgba(56,189,248,.45);
+      background: rgba(56,189,248,.08);
+    }
+
+    .equipment-head {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .equipment-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      color: var(--accent);
+      background: rgba(255,255,255,.06);
+      font-weight: 900;
+    }
+
+    .equipment-card.unlocked .equipment-icon {
+      background: var(--accent);
+      color: #06111f;
+      border-color: transparent;
+    }
+
+    .equipment-card h4 {
+      margin: 0 0 4px;
+    }
+
+    .equipment-level {
+      color: var(--accent-2);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .perk-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .perk-list li {
+      color: var(--muted);
+      border-left: 2px solid var(--line);
+      padding-left: 10px;
+      line-height: 1.45;
+    }
+
+    .perk-list li.active-perk {
+      color: var(--text);
+      border-color: var(--accent-2);
+    }
+
+    .game-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 310px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .battlefield {
+      min-height: 420px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+        radial-gradient(circle at 50% 35%, rgba(56,189,248,.13), transparent 42%);
+      background-size: 28px 28px, 28px 28px, auto;
+      padding: 18px;
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+    }
+
+    .pokemon-stage {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      min-height: 460px;
+    }
+
+    .battle-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .arena {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: center;
+      min-height: 250px;
+    }
+
+    .fighter-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .fighter-wrap.player-side {
+      align-self: end;
+      margin-top: 72px;
+    }
+
+    .fighter-wrap.enemy-side {
+      align-self: start;
+      margin-bottom: 72px;
+    }
+
+    .sprite {
+      width: min(160px, 48%);
+      aspect-ratio: 1;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 45%, rgba(56,189,248,.28), transparent 42%),
+        rgba(255,255,255,.06);
+      image-rendering: pixelated;
+    }
+
+    .pixel-sprite {
+      width: 96px;
+      height: 96px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      gap: 0;
+      image-rendering: pixelated;
+    }
+
+    .pixel-sprite span { display: block; }
+
+    .blue-sprite .p { background: #38bdf8; }
+    .blue-sprite .s { background: #0ea5e9; }
+    .blue-sprite .d { background: #075985; }
+    .blue-sprite .f { background: #f8d7b0; }
+    .blue-sprite .e { background: #0f172a; }
+    .blue-sprite .w { background: #e0f2fe; }
+
+    .red-sprite .p { background: #fb7185; }
+    .red-sprite .s { background: #ef4444; }
+    .red-sprite .d { background: #7f1d1d; }
+    .red-sprite .f { background: #f8d7b0; }
+    .red-sprite .e { background: #0f172a; }
+    .red-sprite .w { background: #ffe4e6; }
+
+    .player-side .sprite {
+      justify-self: start;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(34,197,94,.28), transparent 42%),
+        rgba(255,255,255,.06);
+      color: var(--accent-2);
+    }
+
+    .enemy-side .sprite {
+      justify-self: end;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(251,113,133,.26), transparent 42%),
+        rgba(255,255,255,.06);
+      color: var(--danger);
+    }
+
+    .combatant {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(15,23,42,.72);
+      padding: 16px;
+    }
+
+    .combatant h4 {
+      margin: 0 0 10px;
+    }
+
+    .hp-bar {
+      height: 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.06);
+    }
+
+    .hp-bar span {
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      transition: width .22s ease;
+    }
+
+    .enemy .hp-bar span {
+      background: linear-gradient(90deg, var(--danger), var(--accent-3));
+    }
+
+    .battle-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .move-btn {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: left;
+      min-height: 58px;
+      align-items: center;
+    }
+
+    .move-btn span {
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .battle-log {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      padding: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+      min-height: 110px;
+    }
+
+    .battle-menu {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .side-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      padding: 16px;
+    }
+
+    .role-card, .project-card {
+      box-shadow: none;
+      padding: 16px;
+    }
+
+    .role-card h4, .project-card h4 {
+      margin: 0 0 8px;
+    }
+
+    .role-card p, .project-card p {
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    .fit {
+      color: var(--accent-2);
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .medium { color: var(--accent-3); }
+
+    .copy-box {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      margin: 10px 0;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 12px;
+      font: inherit;
+      line-height: 1.5;
+    }
+
+    .audit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .field-block label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .keyword-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .keyword {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: var(--muted);
+      background: rgba(255,255,255,.04);
+      font-size: .82rem;
+    }
+
+    .keyword.hit {
+      color: #052014;
+      border-color: transparent;
+      background: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .snapshot-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .snapshot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+
+    .hidden { display: none; }
+
+    .footer-note {
+      color: var(--muted);
+      margin-top: 18px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      .quest-list, .role-grid, .project-grid, .audit-grid, .world-map, .achievements, .armory-layout, .equipment-grid, .game-layout, .battle-row, .battle-actions, .arena, .battle-menu { grid-template-columns: 1fr; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .top-actions { justify-content: flex-start; }
+      .character-panel { position: static; }
+      .fighter-wrap.player-side, .fighter-wrap.enemy-side { margin: 0; }
+      .sprite { width: 112px; }
+    }
+
+    @media (max-width: 560px) {
+      .app-shell { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .stats { grid-template-columns: 1fr; }
+      .hero-main { min-height: auto; }
+      .section-title { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+
+  <main class="app-shell">
+    <nav class="topbar" aria-label="Roadmap navigation">
+      <div class="brand">
+        <div class="mark">FL</div>
+        <div>
+          <h1>AI Engineer Visibility Roadmap</h1>
+          <p>LinkedIn SEO, portfolio proof, and role targeting for Felix Lianto.</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button type="button" id="copyHeadline">Copy headline</button>
+        <button type="button" class="primary" id="resetProgress">Reset progress</button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-main">
+        <div class="eyebrow">Main quest</div>
+        <h2>Become impossible to skim past.</h2>
+        <p>Position yourself as an early-career AI Engineer first, with marketing fluency as your edge. Finish visible, proof-based tasks in order: profile SEO, project wording, recruiter-ready skills, then one flagship AI system.</p>
+      </div>
+      <aside class="status-panel hero-main" aria-label="Progress summary">
+        <div class="level-row">
+          <div>
+            <div class="small">Current rank</div>
+            <div class="level" id="rank">Profile Starter</div>
+          </div>
+          <div class="xp" id="xpText">0 XP</div>
+        </div>
+        <div class="bar" aria-label="Total progress"><span id="progressBar"></span></div>
+        <div class="stats">
+          <div class="stat"><strong id="doneCount">0</strong><span>quests done</span></div>
+          <div class="stat"><strong id="seoScore">0%</strong><span>SEO boost</span></div>
+          <div class="stat"><strong id="weekFocus">Profile</strong><span>focus now</span></div>
+        </div>
+        <div class="avatar">
+          <div class="avatar-icon" id="avatarIcon">01</div>
+          <div>
+            <strong id="avatarTitle">Recruiter Signal Level 1</strong>
+            <span class="small" id="avatarText">Start with profile visibility. Small edits, immediate signal.</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="Roadmap sections">
+      <button type="button" class="tab active" data-tab="quests">Quests</button>
+      <button type="button" class="tab" data-tab="play">Play</button>
+      <button type="button" class="tab" data-tab="armory">Armory</button>
+      <button type="button" class="tab" data-tab="audit">Profile Audit</button>
+      <button type="button" class="tab" data-tab="roles">Roles Now</button>
+      <button type="button" class="tab" data-tab="copy">Profile Copy</button>
+      <button type="button" class="tab" data-tab="projects">Flagship Projects</button>
+    </div>
+
+    <section class="panel tab-panel" id="quests">
+      <div class="section-title">
+        <div>
+          <h3>Campaign Map</h3>
+          <p>Clear chapters in order. Each quest earns XP toward the final boss: a recruiter-ready AI Engineer profile.</p>
+        </div>
+        <span class="badge" id="nextQuest">Next: headline</span>
+      </div>
+      <div class="world-map" id="worldMap"></div>
+      <div class="quest-list" id="questList"></div>
+      <div class="achievements" id="achievements"></div>
+      <div class="boss" id="bossFight">
+        <strong>Final boss: Recruiter search test</strong>
+        <p class="small" id="bossText">Unlock this by finishing the profile, project, and proof chapters.</p>
+      </div>
+    </section>
+
+    <section class="panel tab-panel hidden" id="play">
+      <div class="section-title">
+        <div>
+          <h3>Signal Forge</h3>
+          <p>Use your unlocked equipment to fight focus encounters. Winning grants bonus XP, but stronger enemies require deeper roadmap progress.</p>
+        </div>
+        <span class="badge" id="bonusXp">0 bonus XP</span>
+      </div>
+      <div class="game-layout">
+        <div class="battlefield pokemon-stage">
+          <div class="arena">
+            <div class="fighter-wrap player-side">
+              <div class="sprite" id="playerSprite" aria-label="Blue pixel humanoid player">
+                <div class="pixel-sprite blue-sprite" aria-hidden="true">
+                  <span></span><span></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span><span></span><span></span>
+                  <span></span><span class="d"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="d"></span><span></span>
+                  <span></span><span></span><span class="f"></span><span class="e"></span><span class="f"></span><span class="e"></span><span></span><span></span>
+                  <span></span><span class="s"></span><span class="s"></span><span class="p"></span><span class="p"></span><span class="s"></span><span class="s"></span><span></span>
+                  <span class="s"></span><span></span><span class="p"></span><span class="w"></span><span class="w"></span><span class="p"></span><span></span><span class="s"></span>
+                  <span></span><span></span><span class="p"></span><span class="p"></span><span class="p"></span><span class="p"></span><span></span><span></span>
+                  <span></span><span class="d"></span><span class="d"></span><span></span><span></span><span class="d"></span><span class="d"></span><span></span>
+                  <span class="d"></span><span class="d"></span><span></span><span></span><span></span><span></span><span class="d"></span><span class="d"></span>
+                </div>
+              </div>
+              <article class="combatant">
+                <h4 id="playerName">Signal Engineer</h4>
+                <div class="hp-bar" aria-label="Player health"><span id="playerHpBar"></span></div>
+                <p class="small" id="playerStats">HP 100/100 · Power 10 · Guard 4</p>
+              </article>
+            </div>
+            <div class="fighter-wrap enemy-side">
+              <article class="combatant enemy">
+                <h4 id="enemyName">Vague Profile Shade</h4>
+                <div class="hp-bar" aria-label="Enemy health"><span id="enemyHpBar"></span></div>
+                <p class="small" id="enemyStats">HP 80/80 · Threat 8</p>
+              </article>
+              <div class="sprite" id="enemySprite" aria-label="Red pixel humanoid opponent">
+                <div class="pixel-sprite red-sprite" aria-hidden="true">
+                  <span></span><span></span><span class="d"></span><span class="d"></span><span class="d"></span><span class="d"></span><span></span><span></span>
+                  <span></span><span class="d"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="d"></span><span></span>
+                  <span></span><span></span><span class="f"></span><span class="e"></span><span class="f"></span><span class="e"></span><span></span><span></span>
+                  <span></span><span class="s"></span><span class="s"></span><span class="p"></span><span class="p"></span><span class="s"></span><span class="s"></span><span></span>
+                  <span class="s"></span><span></span><span class="p"></span><span class="w"></span><span class="w"></span><span class="p"></span><span></span><span class="s"></span>
+                  <span></span><span></span><span class="p"></span><span class="p"></span><span class="p"></span><span class="p"></span><span></span><span></span>
+                  <span></span><span class="d"></span><span class="d"></span><span></span><span></span><span class="d"></span><span class="d"></span><span></span>
+                  <span class="d"></span><span class="d"></span><span></span><span></span><span></span><span></span><span class="d"></span><span class="d"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="battle-menu">
+            <div class="battle-log" id="battleLog">A focus encounter appears. Clear roadmap chapters to make your equipment stronger.</div>
+            <div class="battle-actions">
+              <button type="button" class="primary move-btn" id="attackBtn"><strong>Focus Strike</strong><span>Reliable damage</span></button>
+              <button type="button" class="move-btn" id="skillBtn"><strong>Artifact Skill</strong><span>Heavy hit + restore</span></button>
+              <button type="button" class="move-btn" id="guardBtn"><strong>Guard</strong><span>Reduce next hit</span></button>
+              <button type="button" class="move-btn" id="newEnemyBtn"><strong>Swap Encounter</strong><span>Find next rival</span></button>
+            </div>
+          </div>
+        </div>
+        <aside class="side-panel">
+          <h4>Encounter Rules</h4>
+          <p class="small">Roadmap XP raises your base level. Armory equipment raises Power, Guard, and Skill strength. Defeating encounters earns bonus XP for the game layer.</p>
+          <div class="stat-lines" id="gameStatLines"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel tab-panel hidden" id="armory">
+      <div class="section-title">
+        <div>
+          <h3>Armory</h3>
+          <p>Complete roadmap chapters to equip artifacts. Each level unlocks a stronger tool you can use in the rest of the game.</p>
+        </div>
+        <span class="badge" id="equippedCount">0/6 equipped</span>
+      </div>
+      <div class="armory-layout">
+        <aside class="character-panel" aria-label="Character build">
+          <div class="character-frame">
+            <div class="character-sigil" id="characterSigil">SE</div>
+          </div>
+          <h4 id="classTitle">Signal Engineer</h4>
+          <p class="small" id="classText">Build type: AI first, marketing-aware, proof-driven.</p>
+          <div class="stat-lines" id="statLines"></div>
+        </aside>
+        <div class="equipment-grid" id="equipmentGrid"></div>
+      </div>
+    </section>
+
+    <section class="panel tab-panel hidden" id="audit">
+      <div class="section-title">
+        <div>
+          <h3>LinkedIn Change Tracker</h3>
+          <p>Paste your current and updated profile text. The tracker scores recruiter keywords and saves dated snapshots in this browser.</p>
+        </div>
+        <button type="button" class="primary" id="saveSnapshot">Save snapshot</button>
+      </div>
+      <div class="audit-grid">
+        <div class="field-block">
+          <label for="beforeText">Before profile text</label>
+          <textarea id="beforeText" placeholder="Paste your current headline, About, skills, project titles, or post text here."></textarea>
+        </div>
+        <div class="field-block">
+          <label for="afterText">After profile text</label>
+          <textarea id="afterText" placeholder="Paste your rewritten LinkedIn text here after completing roadmap quests."></textarea>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong id="beforeScore">0%</strong><span>before keyword coverage</span></div>
+        <div class="stat"><strong id="afterScore">0%</strong><span>after keyword coverage</span></div>
+        <div class="stat"><strong id="deltaScore">+0%</strong><span>visibility gain</span></div>
+      </div>
+      <div class="keyword-cloud" id="keywordCloud"></div>
+      <div class="snapshot-list" id="snapshotList"></div>
+    </section>
+
+    <section class="panel tab-panel hidden" id="roles">
+      <div class="section-title">
+        <div>
+          <h3>Roles You Can Target Now</h3>
+          <p>Based only on your current profile: AI student, Python/ML projects, model evaluation, SHAP/XGBoost exposure, marketing/UGC, student society marketing, service roles, awards.</p>
+        </div>
+      </div>
+      <div class="role-grid">
+        <article class="role-card">
+          <span class="fit">Strong fit now</span>
+          <h4>AI/ML Intern</h4>
+          <p>You already show academic AI training, ML projects, Python, evaluation thinking, and motivation. Best for internships that expect learning velocity over production ownership.</p>
+        </article>
+        <article class="role-card">
+          <span class="fit">Strong fit now</span>
+          <h4>Data Analyst Intern</h4>
+          <p>Your data preprocessing, model evaluation, visualization, and business/marketing context fit analytics internships, especially where communication matters.</p>
+        </article>
+        <article class="role-card">
+          <span class="fit">Strong fit now</span>
+          <h4>Marketing Data Intern</h4>
+          <p>This is your bridge role: campaign thinking plus data analytics. You can credibly target content performance, social analytics, audience insights, and reporting roles.</p>
+        </article>
+        <article class="role-card">
+          <span class="fit medium">Good fit now</span>
+          <h4>Junior Data Scientist</h4>
+          <p>Suitable for graduate or junior roles that value experimentation, classical ML, explainability, and problem framing. Stronger with a clean GitHub portfolio.</p>
+        </article>
+        <article class="role-card">
+          <span class="fit medium">Good fit now</span>
+          <h4>AI Content / Growth Tech Intern</h4>
+          <p>Your UGC and marketing experience makes you credible for AI-assisted content workflows, campaign automation, prompt testing, and growth experiments.</p>
+        </article>
+        <article class="role-card">
+          <span class="fit medium">Stretch now</span>
+          <h4>Junior AI Engineer</h4>
+          <p>You have the foundation, but most roles will expect API deployment, LLM/RAG experience, Docker, GitHub proof, and stronger production-style engineering evidence.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel tab-panel hidden" id="copy">
+      <div class="section-title">
+        <div>
+          <h3>Copy Blocks</h3>
+          <p>Use these directly on LinkedIn, then adjust the wording until it sounds like you.</p>
+        </div>
+      </div>
+      <h4>Headline</h4>
+      <div class="copy-box" id="headlineText">AI Engineer in Training | Python, Machine Learning, LLM/RAG Apps | Final-Year AI Student @ UTS | Marketing-Aware AI Systems</div>
+      <h4>About opener</h4>
+      <div class="copy-box">Final-year Bachelor of Artificial Intelligence student at UTS focused on AI Engineering, Machine Learning, and LLM/RAG applications. I build applied AI/ML projects using Python, scikit-learn, TensorFlow/Keras, XGBoost, SHAP, data preprocessing, and model evaluation. My secondary background in marketing, UGC, and content strategy gives me a practical edge in building AI systems for content intelligence, audience analysis, and business decision support.</div>
+      <h4>Technical focus</h4>
+      <div class="copy-box">Python, Machine Learning, Deep Learning, LLM Applications, RAG, Generative AI, Prompt Engineering, FastAPI, scikit-learn, TensorFlow, Keras, XGBoost, SHAP, Model Evaluation, Data Analytics, SQL, Git, Docker.</div>
+    </section>
+
+    <section class="panel tab-panel hidden" id="projects">
+      <div class="section-title">
+        <div>
+          <h3>Flagship Project Paths</h3>
+          <p>Pick one to become your recruiter-proof project. The first one best combines AI Engineering with your marketing edge.</p>
+        </div>
+      </div>
+      <div class="project-grid">
+        <article class="project-card">
+          <span class="badge">Best fit</span>
+          <h4>AI UGC Campaign Assistant</h4>
+          <p>RAG app that reads brand docs, generates UGC campaign briefs, scores concepts, and returns cited, structured outputs. Stack: Python, FastAPI, OpenAI API, LangChain/LlamaIndex, Chroma/pgvector, Docker, evals.</p>
+        </article>
+        <article class="project-card">
+          <span class="badge">SEO booster</span>
+          <h4>AI Study Assistant</h4>
+          <p>RAG assistant for course PDFs and notes with cited answers, retrieval tuning, faithfulness checks, and latency/cost tracking. Very clean signal for LLM Engineer and AI Engineer searches.</p>
+        </article>
+        <article class="project-card">
+          <span class="badge">Upgrade existing</span>
+          <h4>ML Classifier API</h4>
+          <p>Turn your breast cancer classifier into a deployed API/app with tests, Docker, model card, confusion matrix, recall/specificity, and a polished README.</p>
+        </article>
+      </div>
+      <p class="footer-note">Market-average AI Engineer target: one deployed LLM/RAG app, one clean ML API, GitHub proof, Docker, FastAPI, evals, and profile keywords tied to real projects.</p>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const quests = [
+        { id: "headline", xp: 40, phase: "Profile", title: "Change LinkedIn headline", detail: "Use AI Engineer in Training, Python, Machine Learning, LLM/RAG Apps, UTS, and marketing-aware AI systems." },
+        { id: "about", xp: 50, phase: "Profile", title: "Rewrite first 3 About lines", detail: "Lead with AI Engineering, ML, LLM/RAG, Python, and your marketing domain edge." },
+        { id: "skills", xp: 45, phase: "Profile", title: "Reorder skills for recruiter search", detail: "Put AI, Machine Learning, Python, Data Science, Deep Learning, LLMs, RAG, Prompt Engineering, FastAPI, Docker, Git, and SQL near the top." },
+        { id: "openwork", xp: 25, phase: "Profile", title: "Set targeted Open to Work roles", detail: "AI Engineer, Junior AI Engineer, Machine Learning Engineer, Graduate AI Engineer, Applied AI Engineer, LLM Engineer, Data Analyst Intern." },
+        { id: "projectnames", xp: 45, phase: "Projects", title: "Rename projects with keywords", detail: "Put Python, scikit-learn, RNN, LSTM, GRU, Time-Series Forecasting, Model Evaluation directly in project titles." },
+        { id: "featured", xp: 35, phase: "Projects", title: "Fix Featured section", detail: "Pin GitHub/portfolio first, then stock predictor, breast cancer classifier, awards, and best posts." },
+        { id: "postformat", xp: 35, phase: "Posts", title: "Use recruiter-readable post format", detail: "For each post: Project, Goal, Stack, Methods, Result, Limitations, Next improvement." },
+        { id: "github", xp: 70, phase: "Proof", title: "Polish one GitHub repo", detail: "Add README, architecture, setup, screenshots, metrics, limitations, tests, and clear folders." },
+        { id: "fastapi", xp: 80, phase: "Engineering", title: "Deploy one FastAPI model endpoint", detail: "Turn an existing ML project into an API with REST endpoint, input validation, and basic tests." },
+        { id: "docker", xp: 65, phase: "Engineering", title: "Containerize a project with Docker", detail: "Add Dockerfile and environment setup so a recruiter can run it without guessing." },
+        { id: "rag", xp: 110, phase: "AI Engineer", title: "Build flagship LLM/RAG project", detail: "Create AI UGC Campaign Assistant or AI Study Assistant using LLM API, embeddings, vector database, citations, and structured outputs." },
+        { id: "evals", xp: 90, phase: "AI Engineer", title: "Add evals to flagship project", detail: "Track faithfulness, answer relevance, retrieval quality, latency, and cost per query." }
+      ];
+
+      const stateKey = "felix-ai-roadmap-progress";
+      const auditKey = "felix-ai-roadmap-audit";
+      const saved = JSON.parse(localStorage.getItem(stateKey) || "{}");
+      saved.bonusXp = saved.bonusXp || 0;
+      const auditState = JSON.parse(localStorage.getItem(auditKey) || '{"before":"","after":"","snapshots":[]}');
+      const targetKeywords = [
+        "AI Engineer", "Artificial Intelligence", "Machine Learning", "Python",
+        "LLM", "RAG", "Generative AI", "Prompt Engineering", "FastAPI",
+        "Docker", "Git", "SQL", "Data Analytics", "Model Evaluation",
+        "scikit-learn", "TensorFlow", "Keras", "XGBoost", "SHAP",
+        "Embeddings", "Vector Database", "LangChain", "LlamaIndex",
+        "OpenAI API", "MLOps", "REST API", "Deep Learning"
+      ];
+      const questList = document.getElementById("questList");
+      const doneCount = document.getElementById("doneCount");
+      const xpText = document.getElementById("xpText");
+      const seoScore = document.getElementById("seoScore");
+      const progressBar = document.getElementById("progressBar");
+      const rank = document.getElementById("rank");
+      const weekFocus = document.getElementById("weekFocus");
+      const nextQuest = document.getElementById("nextQuest");
+      const worldMap = document.getElementById("worldMap");
+      const achievements = document.getElementById("achievements");
+      const bossFight = document.getElementById("bossFight");
+      const bossText = document.getElementById("bossText");
+      const avatarIcon = document.getElementById("avatarIcon");
+      const avatarTitle = document.getElementById("avatarTitle");
+      const avatarText = document.getElementById("avatarText");
+      const equippedCount = document.getElementById("equippedCount");
+      const equipmentGrid = document.getElementById("equipmentGrid");
+      const statLines = document.getElementById("statLines");
+      const classTitle = document.getElementById("classTitle");
+      const classText = document.getElementById("classText");
+      const bonusXp = document.getElementById("bonusXp");
+      const playerHpBar = document.getElementById("playerHpBar");
+      const enemyHpBar = document.getElementById("enemyHpBar");
+      const playerStats = document.getElementById("playerStats");
+      const enemyStats = document.getElementById("enemyStats");
+      const enemyName = document.getElementById("enemyName");
+      const battleLog = document.getElementById("battleLog");
+      const gameStatLines = document.getElementById("gameStatLines");
+      const beforeText = document.getElementById("beforeText");
+      const afterText = document.getElementById("afterText");
+      const beforeScore = document.getElementById("beforeScore");
+      const afterScore = document.getElementById("afterScore");
+      const deltaScore = document.getElementById("deltaScore");
+      const keywordCloud = document.getElementById("keywordCloud");
+      const snapshotList = document.getElementById("snapshotList");
+
+      function rankFor(xp) {
+        if (xp >= 650) return "Recruiter Beacon";
+        if (xp >= 450) return "AI Portfolio Builder";
+        if (xp >= 260) return "SEO Activated";
+        if (xp >= 100) return "Profile Optimizer";
+        return "Profile Starter";
+      }
+
+      const encounters = [
+        { name: "Vague Profile Shade", hp: 70, threat: 8, reward: 20, sigil: "VS" },
+        { name: "Unfinished Repo Warden", hp: 95, threat: 11, reward: 30, sigil: "RW" },
+        { name: "Keyword Fog Sentinel", hp: 115, threat: 13, reward: 35, sigil: "KF" },
+        { name: "Deployment Gatekeeper", hp: 140, threat: 16, reward: 45, sigil: "DG" },
+        { name: "Final Boss: Recruiter Scan", hp: 180, threat: 20, reward: 70, sigil: "RS" }
+      ];
+
+      const battle = {
+        enemyIndex: 0,
+        playerHp: 100,
+        enemyHp: 70,
+        guarding: false
+      };
+
+      function stageNames() {
+        return ["Profile", "Projects", "Posts", "Proof", "Engineering", "AI Engineer"];
+      }
+
+      function equipmentData() {
+        return [
+          {
+            stage: "Profile",
+            item: "Signal Lens",
+            slot: "Head",
+            icon: "SL",
+            stat: "Signal",
+            perks: [
+              { name: "Keyword Sight", boost: "+3 Skill, +1 Signal" },
+              { name: "Weak Signal Reveal", boost: "+3 Skill, +1 Signal" },
+              { name: "Recruiter Scan", boost: "+3 Skill, +1 Signal" }
+            ]
+          },
+          {
+            stage: "Projects",
+            item: "Blueprint Core",
+            slot: "Core",
+            icon: "BC",
+            stat: "Craft",
+            perks: [
+              { name: "Title Forge", boost: "+3 Power, +1 Craft" },
+              { name: "Case Study Frame", boost: "+3 Power, +1 Craft" },
+              { name: "Portfolio Armor", boost: "+3 Power, +1 Craft" }
+            ]
+          },
+          {
+            stage: "Posts",
+            item: "Broadcast Crystal",
+            slot: "Neck",
+            icon: "BR",
+            stat: "Voice",
+            perks: [
+              { name: "Hook Spark", boost: "+2 Power, +1 Voice" },
+              { name: "Story Channel", boost: "+2 Skill, +1 Voice" },
+              { name: "Signal Burst", boost: "+4 Skill, +1 Voice" }
+            ]
+          },
+          {
+            stage: "Proof",
+            item: "Repository Key",
+            slot: "Key",
+            icon: "RK",
+            stat: "Proof",
+            perks: [
+              { name: "Vault Access", boost: "+2 Guard, +1 Proof" },
+              { name: "Evidence Seal", boost: "+2 Guard, +1 Proof" },
+              { name: "Trust Gate", boost: "+2 Guard, +1 Proof" }
+            ]
+          },
+          {
+            stage: "Engineering",
+            item: "Deployment Engine",
+            slot: "Back",
+            icon: "DE",
+            stat: "Systems",
+            perks: [
+              { name: "API Ignition", boost: "+3 Guard, +1 Systems" },
+              { name: "Container Drive", boost: "+3 Guard, +1 Systems" },
+              { name: "Launch Protocol", boost: "+3 Guard, +1 Systems" }
+            ]
+          },
+          {
+            stage: "AI Engineer",
+            item: "Neural Compass",
+            slot: "Relic",
+            icon: "NC",
+            stat: "Mastery",
+            perks: [
+              { name: "Pathfinder Mode", boost: "+8 Skill, +1 Mastery" },
+              { name: "Build Alignment", boost: "+8 Skill, +1 Mastery" },
+              { name: "Final Expedition", boost: "+8 Skill, +1 Mastery" }
+            ]
+          }
+        ];
+      }
+
+      function stageProgress(stage) {
+        const stageQuests = quests.filter((quest) => quest.phase === stage);
+        const done = stageQuests.filter((quest) => saved[quest.id]).length;
+        return { done, total: stageQuests.length };
+      }
+
+      function equipmentLevel(stage) {
+        const progress = stageProgress(stage);
+        if (!progress.total) return 0;
+        const ratio = progress.done / progress.total;
+        if (ratio >= 1) return 3;
+        if (ratio >= .66) return 2;
+        if (ratio > 0) return 1;
+        return 0;
+      }
+
+      function totalRoadmapXp() {
+        return quests.reduce((sum, quest) => sum + (saved[quest.id] ? quest.xp : 0), 0);
+      }
+
+      function gameStats() {
+        const levels = equipmentData().map((item) => equipmentLevel(item.stage));
+        const equipPower = levels.reduce((sum, level) => sum + level, 0);
+        const roadmapXp = totalRoadmapXp();
+        return {
+          maxHp: 100 + Math.floor(roadmapXp / 80) * 8,
+          power: 10 + equipPower * 3 + Math.floor(roadmapXp / 180),
+          guard: 4 + equipmentLevel("Engineering") * 3 + equipmentLevel("Proof") * 2,
+          skill: 18 + equipmentLevel("AI Engineer") * 8 + equipmentLevel("Profile") * 3,
+          equipPower
+        };
+      }
+
+      function currentEnemy() {
+        return encounters[battle.enemyIndex % encounters.length];
+      }
+
+      function resetBattle(nextEnemy) {
+        const stats = gameStats();
+        if (nextEnemy) battle.enemyIndex = (battle.enemyIndex + 1) % encounters.length;
+        const enemy = currentEnemy();
+        battle.playerHp = stats.maxHp;
+        battle.enemyHp = enemy.hp;
+        battle.guarding = false;
+        battleLog.textContent = `Wild ${enemy.name} appeared. Choose a move. Artifact power: ${stats.equipPower}/18.`;
+        renderBattle();
+      }
+
+      function enemyTurn() {
+        if (battle.enemyHp <= 0) return;
+        const stats = gameStats();
+        const enemy = currentEnemy();
+        const reduction = battle.guarding ? stats.guard + 8 : stats.guard;
+        const damage = Math.max(1, enemy.threat - reduction + Math.floor(Math.random() * 5));
+        battle.playerHp = Math.max(0, battle.playerHp - damage);
+        battle.guarding = false;
+        if (battle.playerHp <= 0) {
+          battleLog.textContent += ` ${enemy.name} used Doubt Spiral. Your focus broke. Swap encounters to reset.`;
+        } else {
+          battleLog.textContent += ` ${enemy.name} countered for ${damage}.`;
+        }
+        renderBattle();
+      }
+
+      function winEncounter(enemy) {
+        saved.bonusXp = (saved.bonusXp || 0) + enemy.reward;
+        localStorage.setItem(stateKey, JSON.stringify(saved));
+        battleLog.textContent += ` ${enemy.name} fainted. You gained ${enemy.reward} bonus XP.`;
+        render();
+      }
+
+      function renderBattle() {
+        const stats = gameStats();
+        const enemy = currentEnemy();
+        const maxPlayer = stats.maxHp;
+        playerHpBar.style.width = `${Math.max(0, Math.round((battle.playerHp / maxPlayer) * 100))}%`;
+        enemyHpBar.style.width = `${Math.max(0, Math.round((battle.enemyHp / enemy.hp) * 100))}%`;
+        enemyName.textContent = enemy.name;
+        playerStats.textContent = `HP ${battle.playerHp}/${maxPlayer} · Power ${stats.power} · Guard ${stats.guard} · Skill ${stats.skill}`;
+        enemyStats.textContent = `HP ${battle.enemyHp}/${enemy.hp} · Threat ${enemy.threat} · Reward ${enemy.reward} XP`;
+        bonusXp.textContent = `${saved.bonusXp || 0} bonus XP`;
+        gameStatLines.innerHTML = "";
+        [["Power", stats.power, 45], ["Guard", stats.guard, 24], ["Skill", stats.skill, 60], ["Artifacts", stats.equipPower, 18]].forEach(([name, value, max]) => {
+          const row = document.createElement("div");
+          row.className = "stat-line";
+          row.innerHTML = `<span>${name}</span><div class="mini-bar"><span style="width:${Math.min(100, Math.round((value / max) * 100))}%"></span></div><strong>${value}</strong>`;
+          gameStatLines.appendChild(row);
+        });
+      }
+
+      function achievementData(done, xp) {
+        return [
+          { title: "First Signal", unlocked: done >= 1, text: "Completed your first visibility quest." },
+          { title: "SEO Spark", unlocked: xp >= 100, text: "Reached 100 XP and made the profile easier to find." },
+          { title: "Proof Builder", unlocked: Boolean(saved.github), text: "Polished a GitHub repo into evidence." },
+          { title: "AI Engineer Arc", unlocked: Boolean(saved.rag && saved.evals), text: "Built and evaluated the flagship AI system." }
+        ];
+      }
+
+      function render() {
+        questList.innerHTML = "";
+        worldMap.innerHTML = "";
+        achievements.innerHTML = "";
+        equipmentGrid.innerHTML = "";
+        statLines.innerHTML = "";
+        let done = 0;
+        let xp = 0;
+        let next = null;
+
+        quests.forEach((quest) => {
+          const isDone = Boolean(saved[quest.id]);
+          if (isDone) {
+            done += 1;
+            xp += quest.xp;
+          } else if (!next) {
+            next = quest;
+          }
+
+          const card = document.createElement("article");
+          card.className = "quest-card" + (isDone ? " done" : "");
+          card.innerHTML = `
+            <div class="quest-top">
+              <div class="quest-token">${isDone ? "OK" : quest.phase.slice(0, 2).toUpperCase()}</div>
+              <div>
+                <h4>${quest.title}</h4>
+                <div class="quest-meta">
+                  <span class="badge">${quest.phase}</span>
+                  <span class="badge">${quest.xp} XP</span>
+                </div>
+                <p class="small">${quest.detail}</p>
+              </div>
+            </div>
+            <div class="quest-action">
+              <span class="small">${isDone ? "Reward claimed" : "Reward waiting"}</span>
+              <button type="button" class="${isDone ? "" : "primary"}">${isDone ? "Undo" : "Complete quest"}</button>
+            </div>
+          `;
+          card.querySelector("button").addEventListener("click", () => {
+            saved[quest.id] = !saved[quest.id];
+            localStorage.setItem(stateKey, JSON.stringify(saved));
+            render();
+          });
+          questList.appendChild(card);
+        });
+
+        const total = quests.reduce((sum, q) => sum + q.xp, 0);
+        const displayedXp = xp + (saved.bonusXp || 0);
+        const percent = Math.round((xp / total) * 100);
+        doneCount.textContent = done;
+        xpText.textContent = `${displayedXp} XP`;
+        seoScore.textContent = `${percent}%`;
+        progressBar.style.width = `${percent}%`;
+        rank.textContent = rankFor(xp);
+        weekFocus.textContent = next ? next.phase : "Apply";
+        nextQuest.textContent = next ? `Next: ${next.title}` : "All quests complete";
+
+        stageNames().forEach((stage) => {
+          const progress = stageProgress(stage);
+          const tile = document.createElement("div");
+          const isClear = progress.done === progress.total;
+          const isActive = next && next.phase === stage;
+          tile.className = "stage" + (isClear ? " clear" : "") + (isActive ? " active" : "");
+          tile.innerHTML = `<strong>${stage}</strong><span class="small">${progress.done}/${progress.total} quests cleared</span>`;
+          worldMap.appendChild(tile);
+        });
+
+        achievementData(done, xp).forEach((achievement) => {
+          const tile = document.createElement("div");
+          tile.className = "achievement" + (achievement.unlocked ? " unlocked" : "");
+          tile.innerHTML = `<strong>${achievement.unlocked ? "Unlocked" : "Locked"}: ${achievement.title}</strong><p class="small">${achievement.text}</p>`;
+          achievements.appendChild(tile);
+        });
+
+        const bossReady = Boolean(saved.about && saved.skills && saved.projectnames && saved.github && saved.rag);
+        bossFight.className = "boss" + (bossReady ? " ready" : "");
+        bossText.textContent = bossReady
+          ? "Boss unlocked. Run the profile audit, save a snapshot, and apply to 5 targeted AI/ML roles."
+          : "Unlock this by finishing About, Skills, Project naming, GitHub proof, and the flagship RAG project.";
+
+        const levelNumber = Math.max(1, Math.floor(xp / 120) + 1);
+        avatarIcon.textContent = String(levelNumber).padStart(2, "0");
+        avatarTitle.textContent = `Recruiter Signal Level ${levelNumber}`;
+        avatarText.textContent = next
+          ? `Current mission: ${next.title}.`
+          : "Campaign complete. Time to apply and collect interview data.";
+
+        const equipment = equipmentData();
+        const equipped = equipment.filter((item) => equipmentLevel(item.stage) > 0);
+        equippedCount.textContent = `${equipped.length}/6 equipped`;
+        classTitle.textContent = equipped.length === 6 ? "Signal Engineer: Full Kit" : "Signal Engineer";
+        classText.textContent = equipped.length === 6
+          ? "All artifacts online. Your build is ready for final expeditions."
+          : "Complete chapters to turn roadmap progress into usable equipment.";
+
+        equipment.forEach((item) => {
+          const level = equipmentLevel(item.stage);
+          const card = document.createElement("article");
+          card.className = "equipment-card" + (level > 0 ? " unlocked" : "");
+          card.innerHTML = `
+            <div class="equipment-head">
+              <div class="equipment-icon">${item.icon}</div>
+              <div>
+                <h4>${item.item}</h4>
+                <span class="small">${item.slot} equipment · ${item.stat} stat</span>
+              </div>
+              <span class="equipment-level">Lv. ${level}</span>
+            </div>
+            <ul class="perk-list">
+              ${item.perks.map((perk, index) => `<li class="${index < level ? "active-perk" : ""}">${index < level ? "Unlocked" : "Locked"}: ${perk}</li>`).join("")}
+            </ul>
+          `;
+          equipmentGrid.appendChild(card);
+        });
+
+        const statTotals = equipment.reduce((totals, item) => {
+          totals[item.stat] = equipmentLevel(item.stage);
+          return totals;
+        }, {});
+        Object.entries(statTotals).forEach(([name, value]) => {
+          const row = document.createElement("div");
+          row.className = "stat-line";
+          row.innerHTML = `<span>${name}</span><div class="mini-bar"><span style="width:${Math.round((value / 3) * 100)}%"></span></div><strong>${value}/3</strong>`;
+          statLines.appendChild(row);
+        });
+        renderBattle();
+      }
+
+      function scoreText(text) {
+        const normalized = text.toLowerCase();
+        const hits = targetKeywords.filter((keyword) => normalized.includes(keyword.toLowerCase()));
+        return { hits, score: Math.round((hits.length / targetKeywords.length) * 100) };
+      }
+
+      function renderAudit() {
+        const before = scoreText(beforeText.value);
+        const after = scoreText(afterText.value);
+        const gain = after.score - before.score;
+        beforeScore.textContent = `${before.score}%`;
+        afterScore.textContent = `${after.score}%`;
+        deltaScore.textContent = `${gain >= 0 ? "+" : ""}${gain}%`;
+        keywordCloud.innerHTML = "";
+
+        targetKeywords.forEach((keyword) => {
+          const item = document.createElement("span");
+          item.className = "keyword" + (after.hits.includes(keyword) ? " hit" : "");
+          item.textContent = keyword;
+          keywordCloud.appendChild(item);
+        });
+
+        snapshotList.innerHTML = "";
+        auditState.snapshots.slice().reverse().forEach((snapshot) => {
+          const row = document.createElement("div");
+          row.className = "snapshot";
+          row.innerHTML = `<span>${snapshot.date}</span><strong>${snapshot.score}% coverage</strong>`;
+          snapshotList.appendChild(row);
+        });
+      }
+
+      function persistAudit() {
+        auditState.before = beforeText.value;
+        auditState.after = afterText.value;
+        localStorage.setItem(auditKey, JSON.stringify(auditState));
+        renderAudit();
+      }
+
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach((item) => item.classList.remove("active"));
+          document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.add("hidden"));
+          tab.classList.add("active");
+          document.getElementById(tab.dataset.tab).classList.remove("hidden");
+        });
+      });
+
+      document.getElementById("resetProgress").addEventListener("click", () => {
+        Object.keys(saved).forEach((key) => delete saved[key]);
+        saved.bonusXp = 0;
+        localStorage.setItem(stateKey, JSON.stringify(saved));
+        resetBattle(false);
+        render();
+      });
+
+      document.getElementById("attackBtn").addEventListener("click", () => {
+        if (battle.playerHp <= 0 || battle.enemyHp <= 0) return;
+        const stats = gameStats();
+        const enemy = currentEnemy();
+        const damage = stats.power + Math.floor(Math.random() * 7);
+        battle.enemyHp = Math.max(0, battle.enemyHp - damage);
+        battleLog.textContent = `Signal Engineer used Focus Strike. It dealt ${damage} damage.`;
+        if (battle.enemyHp <= 0) winEncounter(enemy);
+        else enemyTurn();
+        renderBattle();
+      });
+
+      document.getElementById("skillBtn").addEventListener("click", () => {
+        if (battle.playerHp <= 0 || battle.enemyHp <= 0) return;
+        const stats = gameStats();
+        const enemy = currentEnemy();
+        const damage = stats.skill + Math.floor(Math.random() * 10);
+        battle.enemyHp = Math.max(0, battle.enemyHp - damage);
+        battle.playerHp = Math.min(stats.maxHp, battle.playerHp + 8 + equipmentLevel("Proof") * 3);
+        battleLog.textContent = `Signal Engineer used Artifact Skill. It dealt ${damage} damage and restored focus.`;
+        if (battle.enemyHp <= 0) winEncounter(enemy);
+        else enemyTurn();
+        renderBattle();
+      });
+
+      document.getElementById("guardBtn").addEventListener("click", () => {
+        if (battle.playerHp <= 0 || battle.enemyHp <= 0) return;
+        battle.guarding = true;
+        battleLog.textContent = "Signal Engineer used Guard. Focus stabilized.";
+        enemyTurn();
+      });
+
+      document.getElementById("newEnemyBtn").addEventListener("click", () => resetBattle(true));
+
+      beforeText.value = auditState.before || "";
+      afterText.value = auditState.after || "";
+      beforeText.addEventListener("input", persistAudit);
+      afterText.addEventListener("input", persistAudit);
+
+      document.getElementById("saveSnapshot").addEventListener("click", () => {
+        const after = scoreText(afterText.value);
+        auditState.snapshots.push({
+          date: new Date().toLocaleString([], { dateStyle: "medium", timeStyle: "short" }),
+          score: after.score
+        });
+        localStorage.setItem(auditKey, JSON.stringify(auditState));
+        renderAudit();
+      });
+
+      document.getElementById("copyHeadline").addEventListener("click", async () => {
+        const text = document.getElementById("headlineText").textContent.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          document.getElementById("copyHeadline").textContent = "Copied";
+          setTimeout(() => document.getElementById("copyHeadline").textContent = "Copy headline", 1200);
+        } catch {
+          document.getElementById("copyHeadline").textContent = "Select headline";
+        }
+      });
+
+      resetBattle(false);
+      render();
+      renderAudit();
+    })();
+  </script>
+</div>
+</body>
+</html>
